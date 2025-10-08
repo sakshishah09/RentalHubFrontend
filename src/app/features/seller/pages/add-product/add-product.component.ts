@@ -1,4 +1,3 @@
-
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
@@ -23,6 +22,8 @@ export class AddProductComponent implements OnInit {
   categories: any[] = [];
   subcategories: any[] = [];
 
+  productTypes: string[] = ['Electronics', 'Furniture', 'Clothing', 'Books']; // ✅ Add product types
+
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   constructor(private fb: FormBuilder, private productService: ProductService) {}
@@ -30,30 +31,29 @@ export class AddProductComponent implements OnInit {
   ngOnInit(): void {
     this.productForm = this.fb.group({
       name: ['', Validators.required],
+      brand: ['', Validators.required],
       description: ['', Validators.required],
       size: ['', Validators.required],
       color: ['', Validators.required],
       pricePerDay: ['', [Validators.required, Validators.min(0)]],
       priceForSale: ['', [Validators.required, Validators.min(0)]],
-      available: [true],
-      categoryId: ['', Validators.required],
-      subcategoryId: ['', Validators.required],
-      userId: [1] // TODO: get from logged-in user later
+      availableType: ['Sell', Validators.required],
+      productType: ['', Validators.required],
+      category: ['', Validators.required],
+      subcategory: ['', Validators.required],
+      userId: [1] // TODO: get from logged-in user
     });
 
     this.loadCategories();
 
-    // load subcategories dynamically
-    this.productForm.get('categoryId')?.valueChanges.subscribe(catId => {
+    this.productForm.get('category')?.valueChanges.subscribe(catId => {
       this.loadSubcategories(catId);
     });
   }
 
   loadCategories() {
     this.productService.getCategories().subscribe({
-      next: data => {
-        this.categories = data;
-      },
+      next: data => this.categories = data,
       error: err => console.error('❌ Failed to load categories', err)
     });
   }
@@ -61,7 +61,7 @@ export class AddProductComponent implements OnInit {
   loadSubcategories(categoryId: number) {
     if (!categoryId) {
       this.subcategories = [];
-      this.productForm.get('subcategoryId')?.setValue('');
+      this.productForm.get('subcategory')?.setValue('');
       return;
     }
 
@@ -102,16 +102,13 @@ export class AddProductComponent implements OnInit {
       formData.append(key, String(value));
     });
 
-    this.images.forEach(img => {
-      if (img.file) {
-        formData.append('images', img.file, img.file.name);
-      }
-    });
+    const imageFiles = this.images.map(img => img.file).filter(f => f) as File[];
 
     this.loading = true;
     this.errorMsg = '';
 
-    this.productService.createProduct(formData)
+    // ✅ Pass both formData and images
+    this.productService.createProduct(formData, imageFiles)
       .pipe(finalize(() => this.loading = false))
       .subscribe({
         next: () => {
@@ -126,4 +123,3 @@ export class AddProductComponent implements OnInit {
       });
   }
 }
-
