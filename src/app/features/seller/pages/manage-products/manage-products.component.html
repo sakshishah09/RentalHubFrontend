@@ -1,1 +1,50 @@
-<div><h3>Manage Products</h3></div>
+<div class="manage-products-container">
+  <div class="card shadow p-4">
+    <h2 class="text-center mb-4 text-primary fw-bold">Manage Products</h2>
+
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead class="table-dark text-center">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Size</th>
+            <th>Color</th>
+            <th>Price (Sale)</th>
+            <th>Price/Day</th>
+            <th>Available</th>
+            <th>Category</th>
+            <th>Subcategory</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let product of products" class="text-center">
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.size }}</td>
+            <td>{{ product.color }}</td>
+            <td>₹{{ product.priceForSale }}</td>
+            <td>₹{{ product.pricePerDay }}</td>
+            <td>
+              <span [ngClass]="{'badge bg-success': product.available, 'badge bg-danger': !product.available}">
+                {{ product.available ? 'Yes' : 'No' }}
+              </span>
+            </td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.subcategory }}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="toggleAvailability(product)">
+                {{ product.available ? 'Mark Unavailable' : 'Mark Available' }}
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteProduct(product.id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

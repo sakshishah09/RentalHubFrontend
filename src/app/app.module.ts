@@ -20,6 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     AppRoutingModule,
     CoreModule,
+    ReactiveFormsModule,
     NavbarComponent,   // <-- import standalone component
     FooterComponent    // <-- import standalone component
   ],

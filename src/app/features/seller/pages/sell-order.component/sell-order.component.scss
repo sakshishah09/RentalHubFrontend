@@ -1,0 +1,103 @@
+.orders-container {
+  background-color: #f9fafb;
+  min-height: 100vh;
+  padding: 2rem;
+
+  .orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #2c3e50;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      input {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        width: 250px;
+        outline: none;
+        transition: all 0.3s ease;
+
+        &:focus {
+          border-color: #007bff;
+          box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+        }
+      }
+    }
+  }
+
+  .orders-table {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      thead {
+        background: #f0f3f7;
+
+        th {
+          padding: 1rem;
+          text-align: left;
+          color: #34495e;
+          font-weight: 600;
+          font-size: 0.95rem;
+        }
+      }
+
+      tbody {
+        tr {
+          border-bottom: 1px solid #eee;
+          transition: background 0.3s ease;
+
+          &:hover {
+            background: #f9f9f9;
+          }
+
+          td {
+            padding: 1rem;
+            color: #555;
+            font-size: 0.9rem;
+            vertical-align: middle;
+
+            .status {
+              padding: 0.3rem 0.8rem;
+              border-radius: 20px;
+              font-weight: 600;
+              text-align: center;
+              display: inline-block;
+
+              &.pending {
+                background: #fff3cd;
+                color: #856404;
+              }
+
+              &.delivered {
+                background: #d4edda;
+                color: #155724;
+              }
+
+              &.cancelled {
+                background: #f8d7da;
+                color: #721c24;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

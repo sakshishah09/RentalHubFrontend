@@ -5,6 +5,7 @@ node_modules/
 dist/
 out-tsc/
 .tmp/
+.angular/cache/
 
 # IDE files
 .vscode/
@@ -21,3 +22,7 @@ yarn-error.log*
 
 # Environment files
 .env
+.env.*.local
+
+# Optional: OS swap files
+*.swp

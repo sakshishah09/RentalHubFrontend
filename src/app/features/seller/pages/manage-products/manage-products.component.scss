@@ -1,1 +1,25 @@
-/* styles for manage-products */
+.manage-products-container {
+  background-color: #D5DBDB;
+  min-height: 100vh;
+  padding: 30px;
+}
+
+.card {
+  border-radius: 16px;
+  background-color: #fff;
+}
+
+.table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+.badge {
+  font-size: 0.9rem;
+  padding: 6px 10px;
+}
+

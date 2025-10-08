@@ -1,0 +1,74 @@
+<div class="container-fluid py-4">
+  <div class="card shadow-sm border-0 rounded-3">
+    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+      <h4 class="mb-0 fw-bold text-primary">Product Sale Orders</h4>
+      <button class="btn btn-outline-primary btn-sm" (click)="refreshOrders()">
+        <i class="bi bi-arrow-repeat"></i> Refresh
+      </button>
+    </div>
+
+    <div class="card-body">
+      <div *ngIf="orders.length === 0" class="text-center text-muted py-4">
+        No sale orders yet.
+      </div>
+
+      <div class="table-responsive" *ngIf="orders.length > 0">
+        <table class="table align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Order ID</th>
+              <th>Product</th>
+              <th>Buyer</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of orders">
+              <td>#{{ order.id }}</td>
+              <td>{{ order.productName }}</td>
+              <td>{{ order.buyerName }}</td>
+              <td>${{ order.priceForSale }}</td>
+              <td>
+                <span class="badge bg-info" *ngIf="order.status === 'Pending'">{{ order.status }}</span>
+                <span class="badge bg-success" *ngIf="order.status === 'Approved'">{{ order.status }}</span>
+                <span class="badge bg-danger" *ngIf="order.status === 'Cancelled'">{{ order.status }}</span>
+              </td>
+              <td>{{ order.date | date: 'mediumDate' }}</td>
+              <td>
+                <button class="btn btn-sm btn-success me-1" (click)="openConfirmModal(order, 'approve')" *ngIf="order.status === 'Pending'">
+                  Approve
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="openConfirmModal(order, 'cancel')" *ngIf="order.status === 'Pending'">
+                  Cancel
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-primary">Confirm Action</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to <strong>{{ actionType }}</strong> this order?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="confirmAction()">Yes, {{ actionType | titlecase }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>
