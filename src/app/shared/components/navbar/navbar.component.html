@@ -1,0 +1,55 @@
+<nav class="navbar" [ngClass]="{'sticky': isSticky}">
+  <div class="navbar-container">
+    <!-- Logo -->
+    <div class="navbar-logo">
+      <a href="#"><img src="assets/logo.png" alt="Logo"></a>
+    </div>
+
+    <!-- Hamburger Menu -->
+    <div class="navbar-toggle" (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Menu Items -->
+    <ul class="navbar-menu" [class.open]="isMenuOpen">
+      <li class="nav-item dropdown" [class.active]="activeDropdown === 'buy'">
+        <a (click)="toggleDropdown('buy')">
+          BUY <span class="dropdown-icon">&#9662;</span>
+        </a>
+        <div class="dropdown-menu" *ngIf="activeDropdown === 'buy'">
+          <div class="dropdown-column">
+            <h4>Popular Choice</h4>
+            <ul>
+              <li>Ready to Move</li>
+              <li>New Launch</li>
+              <li>Resale</li>
+            </ul>
+          </div>
+          <div class="dropdown-column">
+            <h4>Property Type</h4>
+            <ul>
+              <li>Flat</li>
+              <li>Villa</li>
+              <li>Plot</li>
+            </ul>
+          </div>
+          <div class="dropdown-column">
+            <h4>Budget</h4>
+            <ul>
+              <li>Below 50L</li>
+              <li>50L - 1Cr</li>
+              <li>1Cr+</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item"><a routerLink="/sell" routerLinkActive="active">SELL</a></li>
+      <li class="nav-item"><a routerLink="/rent" routerLinkActive="active">RENT</a></li>
+      <li class="nav-item"><a routerLink="/location" routerLinkActive="active">LOCATION</a></li>
+      <li class="nav-item"><a routerLink="/auth/login" routerLinkActive="active">LOGIN/SIGN UP</a></li>
+    </ul>
+  </div>
+</nav>

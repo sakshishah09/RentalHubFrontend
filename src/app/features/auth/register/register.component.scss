@@ -1,0 +1,124 @@
+.register-container {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f2f5;
+  padding: 50px 0;
+  margin-top: 100px;
+
+  .register-card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 400px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+
+      .form-group {
+        margin-bottom: 1rem;
+        position: relative;
+
+        label {
+          display: block;
+          margin-bottom: 0.3rem;
+          font-weight: 500;
+          color: #555;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="file"] {
+          width: 100%;
+          padding: 0.6rem 0.75rem;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+          font-size: 1rem;
+          transition: border 0.3s;
+
+          &:focus {
+            border-color: #007bff;
+            outline: none;
+          }
+        }
+
+        .error {
+          color: #d93025;
+          font-size: 0.85rem;
+          margin-top: 0.25rem;
+        }
+
+        .password-group {
+          input {
+            padding-right: 2.5rem; // space for eye icon
+          }
+
+          .eye-icon {
+            position: absolute;
+            top: 38px;
+            right: 10px;
+            cursor: pointer;
+            color: #888;
+            font-size: 1rem;
+
+            &:hover {
+              color: #007bff;
+            }
+          }
+        }
+      }
+
+      .register-btn {
+        padding: 0.75rem;
+        border: none;
+        border-radius: 6px;
+        background-color: #007bff;
+        color: #fff;
+        font-size: 1.1rem;
+        cursor: pointer;
+        margin-top: 0.5rem;
+        transition: background 0.3s;
+
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+    }
+
+    .signin-text {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+
+      a {
+        color: #007bff;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  @media(max-width: 480px) {
+    .register-card {
+      width: 90%;
+      padding: 1.5rem;
+    }
+  }
+}

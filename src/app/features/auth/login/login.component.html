@@ -1,0 +1,61 @@
+<div class="login-fullscreen">
+  <div class="login-box">
+    <h2 class="title">Sign In</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+      <!-- Username (email or mobile) -->
+      <div class="form-group">
+        <label for="username">Email or Mobile</label>
+        <input id="username" type="text" formControlName="username" placeholder="Enter email or mobile number"
+          [class.invalid]="username.invalid && (username.touched || username.dirty)">
+        <div class="error" *ngIf="username.invalid && (username.touched || username.dirty)">
+          <div *ngIf="username.errors?.required">Username is required.</div>
+          <div *ngIf="username.errors?.emailOrMobile">Enter a valid email or mobile (digits only, up to 10).</div>
+        </div>
+      </div>
+
+      <!-- Password with eye icon -->
+      <div class="form-group password-row">
+        <label for="password">Password</label>
+        <div class="password-input">
+          <input id="password" [type]="showPassword ? 'text' : 'password'" formControlName="password"
+            placeholder="Enter password (6-10 chars)"
+            [class.invalid]="password.invalid && (password.touched || password.dirty)">
+          <button type="button" class="eye-btn" (click)="togglePassword()" aria-label="Toggle password">
+            <i *ngIf="!showPassword" class="fa fa-eye"></i>
+            <i *ngIf="showPassword" class="fa fa-eye-slash"></i>
+          </button>
+        </div>
+        <div class="error" *ngIf="password.invalid && (password.touched || password.dirty)">
+          <div *ngIf="password.errors?.required">Password is required.</div>
+          <div *ngIf="password.errors?.minlength">Password must be at least 6 characters.</div>
+          <div *ngIf="password.errors?.maxlength">Password cannot be more than 10 characters.</div>
+        </div>
+      </div>
+
+      <!-- remember & forgot row -->
+      <div class="remember-forgot-row">
+        <label class="remember">
+          <input type="checkbox" formControlName="rememberMe"> Remember me
+        </label>
+        <button type="button" class="link-button forgot" (click)="onForgotPassword()">Forgot password?</button>
+      </div>
+
+      <!-- server error -->
+      <div class="error server-error" *ngIf="serverError">{{ serverError }}</div>
+
+      <!-- Login button -->
+      <div class="center">
+        <button class="btn-login" type="submit" [disabled]="loginForm.invalid || loading">
+          <span *ngIf="!loading">Login</span>
+          <span *ngIf="loading">Logging in...</span>
+        </button>
+      </div>
+    </form>
+
+    <!-- register link -->
+    <div class="register">
+      Don't have an account? <a (click)="goToRegister()">Register here</a>
+    </div>
+  </div>
+</div>
