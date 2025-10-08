@@ -1,0 +1,165 @@
+.history-container {
+  background-color: #f9fafb;
+  min-height: 100vh;
+  padding: 2rem;
+
+  .history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1b263b;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 1rem;
+
+      button {
+        background: #eaf1f8;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        color: #2c3e50;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: #007bff;
+          color: #fff;
+        }
+
+        &.active {
+          background: #007bff;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .history-table {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      thead {
+        background: #eef2f7;
+
+        th {
+          padding: 1rem;
+          text-align: left;
+          color: #34495e;
+          font-weight: 600;
+          font-size: 0.95rem;
+        }
+      }
+
+      tbody {
+        tr {
+          border-bottom: 1px solid #eee;
+          transition: background 0.3s ease;
+
+          &:hover {
+            background: #f9f9f9;
+          }
+
+          td {
+            padding: 1rem;
+            color: #555;
+            font-size: 0.9rem;
+            vertical-align: middle;
+
+            .type {
+              font-weight: 600;
+              border-radius: 20px;
+              padding: 0.3rem 0.8rem;
+              display: inline-block;
+
+              &.sell {
+                background: #d4edda;
+                color: #155724;
+              }
+
+              &.rent {
+                background: #cce5ff;
+                color: #004085;
+              }
+            }
+
+            .date {
+              color: #7f8c8d;
+              font-size: 0.85rem;
+            }
+
+            .price {
+              font-weight: 600;
+              color: #2c3e50;
+            }
+
+            .status {
+              padding: 0.3rem 0.8rem;
+              border-radius: 20px;
+              font-weight: 600;
+              display: inline-block;
+
+              &.completed {
+                background: #d4edda;
+                color: #155724;
+              }
+
+              &.returned {
+                background: #e2e3e5;
+                color: #383d41;
+              }
+
+              &.cancelled {
+                background: #f8d7da;
+                color: #721c24;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .history-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      .filter-tabs {
+        button {
+          padding: 0.5rem 1rem;
+          font-size: 0.9rem;
+        }
+      }
+    }
+
+    .history-table {
+      table {
+        font-size: 0.85rem;
+
+        th, td {
+          padding: 0.75rem;
+        }
+      }
+    }
+  }
+}

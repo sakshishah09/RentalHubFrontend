@@ -1,0 +1,76 @@
+<div class="container-fluid py-4">
+  <div class="card shadow-sm border-0 rounded-3">
+    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
+      <h4 class="mb-0 fw-bold text-primary">Rental Bookings</h4>
+      <button class="btn btn-outline-primary btn-sm" (click)="refreshBookings()">
+        <i class="bi bi-arrow-repeat"></i> Refresh
+      </button>
+    </div>
+
+    <div class="card-body">
+      <div *ngIf="bookings.length === 0" class="text-center text-muted py-4">
+        No rental bookings yet.
+      </div>
+
+      <div class="table-responsive" *ngIf="bookings.length > 0">
+        <table class="table align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Booking ID</th>
+              <th>Product</th>
+              <th>Renter</th>
+              <th>Price / Day</th>
+              <th>Days</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let booking of bookings">
+              <td>#{{ booking.id }}</td>
+              <td>{{ booking.productName }}</td>
+              <td>{{ booking.renterName }}</td>
+              <td>${{ booking.pricePerDay }}</td>
+              <td>{{ booking.days }}</td>
+              <td>${{ booking.totalPrice }}</td>
+              <td>
+                <span class="badge bg-warning" *ngIf="booking.status === 'Pending'">{{ booking.status }}</span>
+                <span class="badge bg-success" *ngIf="booking.status === 'Confirmed'">{{ booking.status }}</span>
+                <span class="badge bg-danger" *ngIf="booking.status === 'Cancelled'">{{ booking.status }}</span>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-success me-1" (click)="openConfirmModal(booking, 'confirm')" *ngIf="booking.status === 'Pending'">
+                  Confirm
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="openConfirmModal(booking, 'cancel')" *ngIf="booking.status === 'Pending'">
+                  Cancel
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-primary">Confirm Booking Action</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to <strong>{{ actionType }}</strong> this booking?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="confirmAction()">Yes, {{ actionType | titlecase }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

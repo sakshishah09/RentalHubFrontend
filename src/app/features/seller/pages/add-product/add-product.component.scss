@@ -1,0 +1,40 @@
+.add-product-page {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.add-product-page .card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.add-product-page .form-label {
+  font-weight: 500;
+}
+
+.add-product-page img {
+  max-height: 200px;
+  width: 100%;
+  object-fit: contain;
+}
+
+.add-product-page button.btn-danger {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+.add-product-page .text-end {
+  margin-top: 1.5rem;
+}
+
+.add-product-page .bg-light {
+  background-color: #f1f3f5 !important;
+}
+
+.add-product-page .mb-3 {
+  margin-bottom: 1rem !important;
+}
+
+.spinner-border {
+  vertical-align: text-bottom;
+}

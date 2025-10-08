@@ -1,0 +1,35 @@
+<div class="banner-container">
+  <!-- Background Video -->
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="assets/images/home-video.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>
+
+  <!-- Black Overlay -->
+  <div class="overlay"></div>
+
+  <!-- Center Content -->
+  <div class="banner-content">
+    <h1 class="title">Welcome To RentalHub</h1>
+    <p class="slogan">Your one-stop solution for rentals</p>
+
+    <!-- Scroll Down Button -->
+    <div class="scroll-down" (click)="scrollToContent()">
+      <span class="scroll-label">Scroll Down</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" viewBox="0 0 24 24">
+        <path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- Next Section -->
+<div id="next-section" class="next-section">
+  <h2>About Rentalhub</h2>
+  <p>Here comes your next section content...</p>
+</div>
+
+<!-- Back To Top Button -->
+<button class="back-to-top" *ngIf="showBackToTop" (click)="scrollToTop()">
+  ↑ Top
+</button>

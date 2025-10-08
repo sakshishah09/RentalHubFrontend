@@ -1,0 +1,38 @@
+<div class="dashboard-container d-flex flex-column flex-lg-row">
+  <!-- Sidebar -->
+  <aside class="sidebar bg-light p-3 shadow-sm">
+    <h4 class="text-center mb-4 fw-bold text-primary">RentalHub</h4>
+    <ul class="nav flex-column">
+      <li class="nav-item"><a class="nav-link active" routerLink="/seller/overview">📊 Overview</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/seller/add-product">➕ Add Product</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/seller/manage-products">🛒 Manage Products</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/seller/sell-order">📦 Orders</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/seller/rental-bookings">🗓️ Bookings</a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/seller/history">📜 History</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main-content flex-grow-1 p-4">
+    <!-- Topbar -->
+    <div class="topbar d-flex justify-content-between align-items-center mb-4">
+      <h5 class="fw-semibold">Seller Dashboard</h5>
+      <div class="d-flex align-items-center gap-3">
+        <input type="text" class="form-control form-control-sm search-input" placeholder="Search..." />
+        <button class="btn btn-outline-primary btn-sm">🔔</button>
+        <div class="dropdown">
+          <button class="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown">
+            👤 Seller
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><a class="dropdown-item" href="#">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Router outlet or dashboard sections -->
+    <router-outlet></router-outlet>
+  </main>
+</div>

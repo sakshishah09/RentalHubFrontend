@@ -1,0 +1,39 @@
+<div class="history-container">
+  <div class="history-header">
+    <h2>Order & Booking History</h2>
+    <div class="filter-tabs">
+      <button [class.active]="filter==='all'" (click)="setFilter('all')">All</button>
+      <button [class.active]="filter==='sell'" (click)="setFilter('sell')">Sold</button>
+      <button [class.active]="filter==='rent'" (click)="setFilter('rent')">Rented</button>
+    </div>
+  </div>
+
+  <div class="history-table">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Product</th>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Price</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of filteredOrders">
+          <td>{{ order.id }}</td>
+          <td>{{ order.productName }}</td>
+          <td>
+            <span class="type" [ngClass]="order.type">{{ order.type | titlecase }}</span>
+          </td>
+          <td class="date">{{ order.date }}</td>
+          <td class="price">₹{{ order.price }}</td>
+          <td>
+            <span class="status" [ngClass]="order.status">{{ order.status | titlecase }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

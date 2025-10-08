@@ -1,0 +1,139 @@
+.booking-container {
+  background-color: #f9fafb;
+  min-height: 100vh;
+  padding: 2rem;
+
+  .booking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1b263b;
+    }
+
+    .filter-buttons {
+      display: flex;
+      gap: 1rem;
+
+      button {
+        background: #eaf1f8;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        color: #2c3e50;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: #007bff;
+          color: #fff;
+        }
+
+        &.active {
+          background: #007bff;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .booking-table {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      thead {
+        background: #eef2f7;
+
+        th {
+          padding: 1rem;
+          text-align: left;
+          color: #34495e;
+          font-weight: 600;
+        }
+      }
+
+      tbody {
+        tr {
+          border-bottom: 1px solid #eee;
+          transition: background 0.3s ease;
+
+          &:hover {
+            background: #f9f9f9;
+          }
+
+          td {
+            padding: 1rem;
+            color: #555;
+            font-size: 0.9rem;
+            vertical-align: middle;
+
+            .status {
+              padding: 0.3rem 0.8rem;
+              border-radius: 20px;
+              font-weight: 600;
+              display: inline-block;
+
+              &.waiting {
+                background: #fff3cd;
+                color: #856404;
+              }
+
+              &.confirmed {
+                background: #d4edda;
+                color: #155724;
+              }
+
+              &.rejected {
+                background: #f8d7da;
+                color: #721c24;
+              }
+            }
+
+            .actions {
+              display: flex;
+              gap: 8px;
+
+              button {
+                border: none;
+                padding: 0.4rem 0.8rem;
+                border-radius: 6px;
+                font-size: 0.85rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                &.approve {
+                  background: #28a745;
+                  color: #fff;
+
+                  &:hover {
+                    background: #218838;
+                  }
+                }
+
+                &.reject {
+                  background: #dc3545;
+                  color: #fff;
+
+                  &:hover {
+                    background: #c82333;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

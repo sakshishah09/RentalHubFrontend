@@ -1,0 +1,180 @@
+/* Full screen centered layout */
+.login-fullscreen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f0f4f8 0%, #e9eef6 100%);
+  padding: 20px;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(20, 30, 60, 0.08);
+  padding: 28px;
+  box-sizing: border-box;
+
+  .title {
+    text-align: center;
+    margin: 0 0 20px 0;
+    font-size: 1.6rem;
+    color: #1f2937;
+  }
+
+  form {
+    .form-group {
+      margin-bottom: 16px;
+
+      label {
+        display: block;
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+        color: #374151;
+      }
+
+      input[type="text"],
+      input[type="password"],
+      input[type="email"] {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+        font-size: 0.95rem;
+        box-sizing: border-box;
+        transition: border-color .15s ease;
+
+        &.invalid {
+          border-color: #f43f5e;
+          outline: none;
+        }
+
+        &:focus {
+          border-color: #3b82f6;
+          outline: none;
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
+        }
+      }
+
+      .error {
+        margin-top: 6px;
+        font-size: 0.82rem;
+        color: #dc2626;
+      }
+
+      &.password-row {
+        .password-input {
+          position: relative;
+
+          input {
+            padding-right: 44px;
+          }
+
+          .eye-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #4b5563;
+
+            &:hover {
+              color: #2563eb;
+            }
+          }
+        }
+      }
+    }
+
+    /* ✅ Remember left & Forgot right */
+    .remember-forgot-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+
+      .remember {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.95rem;
+
+        input[type="checkbox"] {
+          width: 16px;
+          height: 16px;
+        }
+      }
+
+      .link-button.forgot {
+        background: transparent;
+        border: none;
+        color: #2563eb;
+        cursor: pointer;
+        font-size: 0.95rem;
+        text-decoration: underline;
+        padding: 0;
+      }
+    }
+
+    .server-error {
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .center {
+      text-align: center;
+      margin-top: 4px;
+
+      .btn-login {
+        width: 100%;
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: none;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        background: linear-gradient(90deg, #2563eb, #3b82f6);
+        color: #fff;
+        box-shadow: 0 8px 18px rgba(59, 130, 246, 0.18);
+        transition: transform .08s ease, box-shadow .08s ease;
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+          transform: none;
+          box-shadow: none;
+        }
+
+        &:active:not(:disabled) {
+          transform: translateY(1px);
+        }
+      }
+    }
+  }
+
+  .register {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 0.92rem;
+
+    a {
+      color: #111827;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .login-box {
+    padding: 20px;
+    border-radius: 8px;
+  }
+}
