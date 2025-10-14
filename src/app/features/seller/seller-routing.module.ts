@@ -12,7 +12,7 @@ import { OverviewComponent } from './pages/overview/overview.component';
 const routes: Routes = [
   {
     path: '',
-    component: SellerDashboardComponent, // layout with sidebar + topbar
+    component: SellerDashboardComponent, 
     children: [
       { path: 'overview', component: OverviewComponent },
       { path: 'add-product', component: AddProductComponent },
@@ -20,7 +20,7 @@ const routes: Routes = [
       { path: 'sell-order', component: SellOrdersComponent },
       { path: 'rental-bookings', component: RentalBookingsComponent },
       { path: 'history', component: HistoryComponent },
-      { path: '', redirectTo: 'overview', pathMatch: 'full' } // default
+      { path: '', redirectTo: 'overview', pathMatch: 'full' } 
     ]
   }
 ];

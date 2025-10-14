@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { UserService } from '../../../core/services/user-service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -30,7 +32,6 @@ export class LoginComponent implements OnInit {
       rememberMe: [false]
     });
 
-    // If credentials were saved (remember me), load them
     const savedUsername = localStorage.getItem('saved_username');
     const savedPassword = localStorage.getItem('saved_password');
     const savedRemember = localStorage.getItem('saved_remember');
@@ -44,18 +45,15 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // Custom validator: either a valid email OR a numeric mobile with up to 10 digits (and at least 6 to be reasonable)
   emailOrMobileValidator(control: AbstractControl): ValidationErrors | null {
     const v = (control.value || '').toString().trim();
     if (!v) return null;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    const mobileRegex = /^[0-9]{1,10}$/; // 1 to 10 digits allowed, will later show message if too short maybe
-    if (emailRegex.test(v)) return null;
-    if (mobileRegex.test(v)) return null;
+    const mobileRegex = /^[0-9]{6,10}$/;
+    if (emailRegex.test(v) || mobileRegex.test(v)) return null;
     return { emailOrMobile: true };
   }
 
-  // Convenience getters
   get username() { return this.loginForm.get('username')!; }
   get password() { return this.loginForm.get('password')!; }
   get rememberMe() { return this.loginForm.get('rememberMe')!; }
@@ -65,7 +63,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.serverError = null;
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -77,13 +74,12 @@ export class LoginComponent implements OnInit {
     };
 
     this.loading = true;
+    this.serverError = null;
 
     this.userService.login(credentials)
       .pipe(finalize(() => this.loading = false))
       .subscribe({
         next: (res: any) => {
-          // Assuming res contains data structure like { data: { token: '...', ... }, message: '...' }
-          // Save username/password/token to localStorage per user's request.
           if (this.rememberMe.value) {
             localStorage.setItem('saved_username', credentials.username);
             localStorage.setItem('saved_password', credentials.password);
@@ -94,32 +90,22 @@ export class LoginComponent implements OnInit {
             localStorage.removeItem('saved_remember');
           }
 
-          // Save token if available — per your instruction token storage should be commented out for now.
-          // if (res && res.data && res.data.token) {
-          //   localStorage.setItem('auth_token', res.data.token);
-          // }
-
-          // For now, if backend returns user details, you can store them or navigate:
-          // localStorage.setItem('user', JSON.stringify(res.data.user));
-
-          // Navigate to dashboard or home after successful login
-          // this.router.navigate(['/dashboard']);
-          console.log('Login response', res);
+          // ✅ Use AuthService now
+          this.authService.login();
+          this.router.navigate(['/']);
         },
         error: (err) => {
           console.error('Login failed', err);
-          this.serverError = err?.error?.message || err?.message || 'Login failed. Please try again.';
+          this.serverError = err?.error?.message || 'Login failed. Please try again.';
         }
       });
   }
 
-  onForgotPassword() {
-    // navigate to forgot password page or open modal
-    // this.router.navigate(['/forgot-password']);
-    console.log('Forgot password clicked');
+    goToRegister() {
+    this.router.navigate(['auth/register']);
   }
 
-  goToRegister() {
-    this.router.navigate(['auth/register']);
+  onForgotPassword() {
+    this.router.navigate(['/auth/forgot-password']);
   }
 }

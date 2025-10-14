@@ -1,0 +1,56 @@
+<section class="contact-section">
+  <div class="container">
+    <h1 class="title">Contact <span>Us</span></h1>
+    <p class="intro">We’d love to hear from you! Fill out the form below or use the live chat to reach us instantly.</p>
+
+    <div class="contact-content">
+      <!-- Contact Form -->
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+        <div class="form-group">
+          <input type="text" placeholder="Name" formControlName="name" />
+          <div *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid" class="error">Name is required</div>
+        </div>
+
+        <div class="form-group">
+          <input type="email" placeholder="Email" formControlName="email" />
+          <div *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.invalid" class="error">
+            Valid Email is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input type="text" placeholder="Mobile" formControlName="mobile" />
+          <div *ngIf="contactForm.get('mobile')?.touched && contactForm.get('mobile')?.invalid" class="error">
+            Valid 10-digit mobile is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input type="text" placeholder="Subject" formControlName="subject" />
+          <div *ngIf="contactForm.get('subject')?.touched && contactForm.get('subject')?.invalid" class="error">
+            Subject is required
+          </div>
+        </div>
+
+        <div class="form-group message-group">
+          <textarea placeholder="Message" formControlName="message" (input)="onMessageChange()"></textarea>
+          <div class="char-count">{{ messageLength }}/500</div>
+          <div *ngIf="contactForm.get('message')?.touched && contactForm.get('message')?.invalid" class="error">
+            Message is required and max 500 characters
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">Send Message</button>
+      </form>
+
+      <!-- Live Chat -->
+      <div class="live-chat">
+        <h3>Live Chat</h3>
+        <div class="chat-box" id="chat-box">
+          <p>Hi! 👋 How can we help you today?</p>
+        </div>
+        <input type="text" placeholder="Type your message..." (keydown.enter)="sendChat($event)" id="chat-input" />
+      </div>
+    </div>
+  </div>
+</section>

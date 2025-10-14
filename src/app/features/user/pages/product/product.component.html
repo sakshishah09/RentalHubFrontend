@@ -1,0 +1,17 @@
+<div class="products-container">
+  <!-- Header -->
+  <div class="header">
+    <h2>Our Products</h2>
+    <button (click)="viewAll()">
+      {{ showAll ? 'Show Less' : 'View All' }}
+    </button>
+  </div>
+
+  <!-- Grid -->
+  <div class="products-grid">
+    <div class="product-card" *ngFor="let product of visibleProducts" (click)="openDetails(product)">
+      <img [src]="product.img" [alt]="product.name" />
+      <p>{{ product.name }}</p>
+    </div>
+  </div>
+</div>

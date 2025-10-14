@@ -1,18 +1,18 @@
-<nav class="navbar" [ngClass]="{'sticky': isSticky}">
+<!-- <nav class="navbar" [ngClass]="{'sticky': isSticky}">
   <div class="navbar-container">
-    <!-- Logo -->
+   
     <div class="navbar-logo">
       <a href="#"><img src="assets/logo.png" alt="Logo"></a>
     </div>
 
-    <!-- Hamburger Menu -->
+   
     <div class="navbar-toggle" (click)="toggleMenu()">
       <span></span>
       <span></span>
       <span></span>
     </div>
 
-    <!-- Menu Items -->
+    
     <ul class="navbar-menu" [class.open]="isMenuOpen">
       <li class="nav-item dropdown" [class.active]="activeDropdown === 'buy'">
         <a (click)="toggleDropdown('buy')">
@@ -52,4 +52,85 @@
       <li class="nav-item"><a routerLink="/auth/login" routerLinkActive="active">LOGIN/SIGN UP</a></li>
     </ul>
   </div>
+</nav> -->
+
+
+<nav class="navbar" [ngClass]="{'sticky': isSticky}">
+  <div class="navbar-container">
+    <!-- Logo -->
+    <div class="navbar-logo">
+      <a routerLink="/"><img src="assets/logo.png" alt="Logo" /></a>
+    </div>
+
+    <!-- Toggle for Mobile -->
+    <div class="navbar-toggle" (click)="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+
+    <!-- Menu Items -->
+    <ul class="navbar-menu" [class.open]="isMenuOpen">
+      <li class="nav-item dropdown" [class.active]="activeDropdown === 'buy'">
+        <a (click)="toggleDropdown('buy')">
+          BUY <span class="dropdown-icon"></span>
+        </a>
+        <!-- <div class="dropdown-menu" *ngIf="activeDropdown === 'buy'">
+          <div class="dropdown-column">
+            <h4>Popular Choice</h4>
+            <ul>
+              <li>Ready to Move</li>
+              <li>New Launch</li>
+              <li>Resale</li>
+            </ul>
+          </div>
+          <div class="dropdown-column">
+            <h4>Property Type</h4>
+            <ul>
+              <li>Flat</li>
+              <li>Villa</li>
+              <li>Plot</li>
+            </ul>
+          </div>
+          <div class="dropdown-column">
+            <h4>Budget</h4>
+            <ul>
+              <li>Below 50L</li>
+              <li>50L - 1Cr</li>
+              <li>1Cr+</li>
+            </ul>
+          </div>
+        </div> -->
+      </li>
+
+      <li class="nav-item"><a routerLink="/rent">RENT</a></li>
+      <li class="nav-item"><a routerLink="/location">LOCATION</a></li>
+
+      <!-- If not logged in -->
+      <ng-container *ngIf="!isLoggedIn; else loggedInMenu">
+        <li class="nav-item"><a routerLink="/auth/login">LOGIN / SIGN UP</a></li>
+      </ng-container>
+
+      <!-- If logged in -->
+      <ng-template #loggedInMenu>
+        <li class="nav-item dropdown" [class.active]="activeDropdown === 'profile'">
+          <a (click)="toggleDropdown('profile')">
+            MY ACCOUNT <span class="dropdown-icon">&#9662;</span>
+          </a>
+          <div class="dropdown-menu" *ngIf="activeDropdown === 'profile'">
+            <div class="dropdown-column">
+              <ul>
+                <li><a routerLink="/profile">Profile</a></li>
+                <li (click)="logout()">Logout</li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ng-template>
+
+            <!-- Seller button (only for logged-in users) -->
+      <li class="nav-item seller-btn" *ngIf="isLoggedIn">
+        <a routerLink="seller/overview">SELLER</a>
+      </li>
+    </ul>
+  </div>
 </nav>
+

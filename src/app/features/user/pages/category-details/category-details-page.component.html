@@ -1,0 +1,24 @@
+<div *ngIf="!loading; else loadingTpl" class="category-details-page">
+  <h2>{{ categoryDetails?.name }}</h2>
+
+  <!-- Subcategories -->
+  <div class="subcategories-grid" *ngIf="categoryDetails?.subCategories?.length">
+    <div class="subcategory-card" *ngFor="let sub of categoryDetails.subCategories"
+      [class.active]="selectedSubCategoryId === sub.id" (click)="selectSubCategory(sub)">
+      <img [src]="sub.imagePath" [alt]="sub.name" (error)="sub.imagePath='/assets/default-category.png'" />
+      <p>{{ sub.name }}</p>
+    </div>
+  </div>
+
+  <!-- Products -->
+  <div class="products-grid" *ngIf="subcategoryProducts?.length > 0">
+    <div class="product-card" *ngFor="let prod of subcategoryProducts">
+      <img [src]="prod.imagePath" [alt]="prod.name" (error)="prod.imagePath='/assets/default-product.png'" />
+      <p>{{ prod.name }}</p>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="loading">Loading category details...</div>
+</ng-template>

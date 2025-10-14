@@ -9,6 +9,7 @@ import { HomeBannerComponent } from './pages/home/home-banner/home-banner.compon
 
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { CategoriesComponent } from './pages/categories/categories.component';
+import { ProductComponent } from './pages/product/product.component';
 
 @NgModule({
   // No declarations because they’re standalone
@@ -22,6 +23,7 @@ import { CategoriesComponent } from './pages/categories/categories.component';
     HomeBannerComponent,
     CategoriesComponent,
     ProfileComponent,
+    ProductComponent,
     ProductDetailsComponent
   ]
 })

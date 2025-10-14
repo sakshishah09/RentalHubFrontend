@@ -1,0 +1,102 @@
+.about-section {
+  background: #fff;
+  padding: 100px 20px 80px; // added extra top padding to clear navbar
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;;
+
+  .container {
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  .about-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .about-text {
+    flex: 1 1 500px;
+    text-align: left; // ensure left alignment on desktop
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #222;
+
+      span {
+        color: #ff4d4d;
+      }
+    }
+
+    p {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: #ff4d4d;
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 25px;
+      border-radius: 30px;
+      transition: 0.3s ease;
+
+      &:hover {
+        background: #e63939;
+        transform: translateY(-3px);
+      }
+    }
+  }
+
+  .about-image {
+    flex: 1 1 400px;
+    text-align: center;
+
+    img {
+      max-width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.03);
+      }
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .about-section {
+    padding-top: 120px; // extra spacing for smaller screens
+  }
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    flex-direction: column;
+    text-align: center;
+
+    .about-text {
+      text-align: center; // center text on mobile
+      h1 {
+        font-size: 2rem;
+      }
+    }
+
+    .about-image {
+      img {
+        width: 90%;
+      }
+    }
+  }
+}

@@ -8,21 +8,26 @@ import { CoreModule } from './core/core.module';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { CategoriesComponent } from './features/user/pages/categories/categories.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    // Do NOT declare NavbarComponent or FooterComponent because they are standalone
+    AppComponent
+    // No need to declare NavbarComponent or FooterComponent, they are standalone
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    CarouselModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     CoreModule,
-    ReactiveFormsModule,
-    NavbarComponent,   // <-- import standalone component
-    FooterComponent    // <-- import standalone component
+    NavbarComponent,
+    FooterComponent,
+    CategoriesComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,10 +1,11 @@
 import { Component, HostListener, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CategoriesComponent } from '../../categories/categories.component';
 
 @Component({
   selector: 'app-home-banner',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CategoriesComponent],
   templateUrl: './home-banner.component.html',
   styleUrls: ['./home-banner.component.scss']
 })
@@ -13,7 +14,7 @@ export class HomeBannerComponent implements AfterViewInit {
 
   // Scroll down to next section
   scrollToContent() {
-    const section = document.getElementById('next-section');
+    const section = document.querySelector('app-categories');
     section?.scrollIntoView({ behavior: 'smooth' });
   }
 

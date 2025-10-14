@@ -1,0 +1,56 @@
+<div class="categories-container" *ngIf="!loading; else loadingTpl">
+  <!-- Header -->
+  <div class="header">
+    <h2>Explore Categories</h2>
+    <button (click)="viewAll()">{{ showAll ? 'Show Less' : 'View All' }}</button>
+  </div>
+
+  <!-- Categories Grid -->
+  <div class="categories-grid">
+    <div
+      class="category-card"
+      *ngFor="let cat of visibleCategories"
+      (click)="selectCategory(cat)"
+      [class.active]="selectedCategoryId === cat.id"
+    >
+      <img [src]="cat.imagePath" [alt]="cat.name" (error)="cat.imagePath='/assets/default-category.png'" />
+      <p>{{ cat.name }}</p>
+    </div>
+  </div>
+
+  <!-- Category Details -->
+  <div class="category-details" *ngIf="selectedCategoryDetails">
+    <div *ngIf="detailsLoading" class="details-loading">Loading subcategories...</div>
+
+    <div *ngIf="!detailsLoading">
+      <!-- Subcategories -->
+      <h3>Subcategories of {{ selectedCategoryDetails.name }}</h3>
+      <div class="subcategories-grid">
+        <div
+          class="subcategory-card"
+          *ngFor="let sub of selectedCategoryDetails.subCategories"
+          (click)="selectSubCategory(sub)"
+          [class.active]="selectedSubCategoryId === sub.id"
+        >
+          <img [src]="sub.imagePath" [alt]="sub.name" (error)="sub.imagePath='/assets/default-category.png'" />
+          <p>{{ sub.name }}</p>
+        </div>
+      </div>
+
+      <!-- Products of selected subcategory -->
+      <div *ngIf="selectedSubCategoryId && subcategoryProducts.length > 0">
+        <h3>Products</h3>
+        <div class="products-grid">
+          <div class="product-card" *ngFor="let prod of subcategoryProducts">
+            <img [src]="prod.imagePath" [alt]="prod.name" (error)="prod.imagePath='/assets/default-product.png'" />
+            <p>{{ prod.name }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="loading">Loading categories...</div>
+</ng-template>
