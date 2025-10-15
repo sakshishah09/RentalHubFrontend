@@ -6,6 +6,7 @@ import { ProductDetailsComponent } from './pages/product-details/product-details
 import { ProductComponent } from './pages/product/product.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryDetailsPageComponent } from './pages/category-details/category-details-page.component';
+import { BookingComponent } from './pages/booking/booking.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'product', component: ProductComponent },
   { path: 'product/:id', component: ProductDetailsComponent },
   { path: 'categories', component: CategoriesComponent },
-  { path: 'categories/:id', component: CategoryDetailsPageComponent }
+  { path: 'categories/:id', component: CategoryDetailsPageComponent },
+  {path: 'booking', component: BookingComponent}
 ];
 
 @NgModule({
