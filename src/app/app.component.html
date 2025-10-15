@@ -1,5 +1,12 @@
-<app-navbar></app-navbar>
-
+<!-- User Layout: Navbar + Footer + ScrollTop -->
+<ng-container *ngIf="isUserRoute">
+  <app-navbar></app-navbar>
   <router-outlet></router-outlet>
+  <app-footer></app-footer>
+  <ngx-scrolltop></ngx-scrolltop>
+</ng-container>
 
-<app-footer></app-footer>
+<!-- Seller/Admin Layout: No Navbar/Footer -->
+<ng-container *ngIf="!isUserRoute">
+  <router-outlet></router-outlet>
+</ng-container>

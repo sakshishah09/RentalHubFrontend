@@ -1,7 +1,6 @@
 .dashboard-container {
   min-height: 100vh;
   background-color: #f8f9fa;
-  margin-top: 100px;
 }
 
 .sidebar {
@@ -45,6 +44,7 @@
   .dashboard-container {
     flex-direction: column;
   }
+
   .sidebar {
     width: 100%;
     border-right: none;

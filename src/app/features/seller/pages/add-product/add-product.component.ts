@@ -1,10 +1,10 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
-import { ProductService } from '../../../../core/services/product.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ProductService } from '../../../../core/services/product-service';
 
 @Component({
   selector: 'app-add-product',
@@ -22,11 +22,11 @@ export class AddProductComponent implements OnInit {
   categories: any[] = [];
   subcategories: any[] = [];
 
-  productTypes: string[] = ['Electronics', 'Furniture', 'Clothing', 'Books']; // ✅ Add product types
+  productTypes: string[] = ['Electronics', 'Furniture', 'Clothing', 'Books']; 
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private fb: FormBuilder, private productService: ProductService) {}
+  constructor(private fb: FormBuilder, private productService: ProductService) { }
 
   ngOnInit(): void {
     this.productForm = this.fb.group({
@@ -41,7 +41,7 @@ export class AddProductComponent implements OnInit {
       productType: ['', Validators.required],
       category: ['', Validators.required],
       subcategory: ['', Validators.required],
-      userId: [1] // TODO: get from logged-in user
+      userId: [1] // TODO: Replace with logged-in user ID
     });
 
     this.loadCategories();
@@ -51,6 +51,7 @@ export class AddProductComponent implements OnInit {
     });
   }
 
+  // Load categories from backend
   loadCategories() {
     this.productService.getCategories().subscribe({
       next: data => this.categories = data,
@@ -58,6 +59,7 @@ export class AddProductComponent implements OnInit {
     });
   }
 
+  // Load subcategories based on selected category
   loadSubcategories(categoryId: number) {
     if (!categoryId) {
       this.subcategories = [];
@@ -71,6 +73,7 @@ export class AddProductComponent implements OnInit {
     });
   }
 
+  // Add image from file input
   onAddImage(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -82,14 +85,17 @@ export class AddProductComponent implements OnInit {
     }
   }
 
+  // Trigger file input click
   addAnotherImage() {
     this.fileInput.nativeElement.click();
   }
 
+  // Remove selected image
   removeImage(index: number) {
     this.images.splice(index, 1);
   }
 
+  // Submit form to backend
   onSubmit() {
     if (this.productForm.invalid) {
       this.errorMsg = 'Please fill all required fields correctly.';
@@ -97,18 +103,13 @@ export class AddProductComponent implements OnInit {
       return;
     }
 
-    const formData = new FormData();
-    Object.entries(this.productForm.value).forEach(([key, value]) => {
-      formData.append(key, String(value));
-    });
-
+    const productData = { ...this.productForm.value };
     const imageFiles = this.images.map(img => img.file).filter(f => f) as File[];
 
     this.loading = true;
     this.errorMsg = '';
 
-    // ✅ Pass both formData and images
-    this.productService.createProduct(formData, imageFiles)
+    this.productService.insertProduct(productData, imageFiles)
       .pipe(finalize(() => this.loading = false))
       .subscribe({
         next: () => {
