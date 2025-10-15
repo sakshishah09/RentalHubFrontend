@@ -49,4 +49,4 @@ export class CategoriesService {
     if (!path) return '/assets/default-category.png';
     return this.urlService.getImageUrl(path);
   }
-}
+} 
