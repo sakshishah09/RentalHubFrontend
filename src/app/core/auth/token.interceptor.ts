@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const token = this.auth.getToken();
     if (token) {

@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ProductService } from '../../../../core/services/product-service';
+import { CategoriesService } from '../../../../core/services/categories-service';
+import { SubCategoryService } from '../../../../core/services/subcategories-service';
+
 
 @Component({
   selector: 'app-add-product',
@@ -15,65 +18,65 @@ import { ProductService } from '../../../../core/services/product-service';
 })
 export class AddProductComponent implements OnInit {
   productForm!: FormGroup;
-  images: { url: string, file?: File }[] = [];
+  images: { url: string; file?: File }[] = [];
   loading = false;
   errorMsg = '';
 
   categories: any[] = [];
   subcategories: any[] = [];
 
-  productTypes: string[] = ['Electronics', 'Furniture', 'Clothing', 'Books']; 
+  productTypes: string[] = ['RENT', 'SALE', 'BOTH']; // Match your enum values if any
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private fb: FormBuilder, private productService: ProductService) { }
+  constructor(
+    private fb: FormBuilder,
+    private productService: ProductService,
+    private categoryService: CategoriesService,
+    private subCategoryService: SubCategoryService
+  ) {}
 
   ngOnInit(): void {
     this.productForm = this.fb.group({
       name: ['', Validators.required],
-      brand: ['', Validators.required],
       description: ['', Validators.required],
       size: ['', Validators.required],
       color: ['', Validators.required],
-      pricePerDay: ['', [Validators.required, Validators.min(0)]],
-      priceForSale: ['', [Validators.required, Validators.min(0)]],
-      availableType: ['Sell', Validators.required],
-      productType: ['', Validators.required],
-      category: ['', Validators.required],
-      subcategory: ['', Validators.required],
-      userId: [1] // TODO: Replace with logged-in user ID
+      pricePerDay: [0, [Validators.required, Validators.min(0)]],
+      priceForSale: [0, [Validators.required, Validators.min(0)]],
+      categoryId: [null, Validators.required],
+      subcategoryId: [null, Validators.required],
+      userId: [1], // Replace with logged-in user
+      productType: ['', Validators.required]
     });
 
+    // Load categories from backend
     this.loadCategories();
 
-    this.productForm.get('category')?.valueChanges.subscribe(catId => {
-      this.loadSubcategories(catId);
+    // Load subcategories dynamically based on category selection
+    this.productForm.get('categoryId')?.valueChanges.subscribe((catId) => {
+      if (catId) this.loadSubcategories(catId);
+      else this.subcategories = [];
     });
   }
 
-  // Load categories from backend
+  // ✅ Load categories
   loadCategories() {
-    this.productService.getCategories().subscribe({
-      next: data => this.categories = data,
-      error: err => console.error('❌ Failed to load categories', err)
+    this.categoryService.getAllCategories(0, 100).subscribe({
+      next: (res) => (this.categories = res),
+      error: (err) => console.error('❌ Failed to load categories', err)
     });
   }
 
-  // Load subcategories based on selected category
+  // ✅ Load subcategories
   loadSubcategories(categoryId: number) {
-    if (!categoryId) {
-      this.subcategories = [];
-      this.productForm.get('subcategory')?.setValue('');
-      return;
-    }
-
-    this.productService.getSubcategories(categoryId).subscribe({
-      next: data => this.subcategories = data,
-      error: err => console.error('❌ Failed to load subcategories', err)
+    this.subCategoryService.getSubCategoriesByCategory(categoryId).subscribe({
+      next: (res) => (this.subcategories = res),
+      error: (err) => console.error('❌ Failed to load subcategories', err)
     });
   }
 
-  // Add image from file input
+  // ✅ Handle image selection
   onAddImage(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -85,17 +88,17 @@ export class AddProductComponent implements OnInit {
     }
   }
 
-  // Trigger file input click
+  // ✅ Trigger file input click
   addAnotherImage() {
     this.fileInput.nativeElement.click();
   }
 
-  // Remove selected image
+  // ✅ Remove image
   removeImage(index: number) {
     this.images.splice(index, 1);
   }
 
-  // Submit form to backend
+  // ✅ Submit form
   onSubmit() {
     if (this.productForm.invalid) {
       this.errorMsg = 'Please fill all required fields correctly.';
@@ -103,21 +106,30 @@ export class AddProductComponent implements OnInit {
       return;
     }
 
-    const productData = { ...this.productForm.value };
-    const imageFiles = this.images.map(img => img.file).filter(f => f) as File[];
-
     this.loading = true;
     this.errorMsg = '';
 
-    this.productService.insertProduct(productData, imageFiles)
-      .pipe(finalize(() => this.loading = false))
+    // Prepare FormData
+    const formData = new FormData();
+    Object.entries(this.productForm.value).forEach(([key, value]) => {
+      formData.append(key, value as any);
+    });
+
+    // Append images
+    this.images.forEach((img, index) => {
+      if (img.file) formData.append('images', img.file);
+    });
+
+    this.productService
+      .saveProduct(formData)
+      .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: () => {
           alert('✅ Product added successfully!');
           this.productForm.reset();
           this.images = [];
         },
-        error: err => {
+        error: (err) => {
           console.error('❌ Product creation failed', err);
           this.errorMsg = 'Failed to add product. Please try again.';
         }

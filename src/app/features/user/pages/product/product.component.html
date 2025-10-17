@@ -1,17 +1,30 @@
-<div class="products-container">
-  <!-- Header -->
-  <div class="header">
-    <h2>Our Products</h2>
-    <button (click)="viewAll()">
-      {{ showAll ? 'Show Less' : 'View All' }}
-    </button>
+<div class="product-page">
+  <h2 *ngIf="subCategoryName">{{ subCategoryName }}</h2>
+
+  <div *ngIf="loading" class="loading">Loading products...</div>
+
+  <div *ngIf="!loading && products.length === 0" class="no-products">
+    No products available in this subcategory.
   </div>
 
-  <!-- Grid -->
-  <div class="products-grid">
-    <div class="product-card" *ngFor="let product of visibleProducts" (click)="openDetails(product)">
-      <img [src]="product.img" [alt]="product.name" />
-      <p>{{ product.name }}</p>
+  <div *ngIf="!loading && products.length > 0" class="product-grid">
+    <div class="product-card" *ngFor="let product of products" (click)="viewProductDetails(product)">
+      <img [src]="product.images[0]" [alt]="product.name" class="product-image" />
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.description }}</p>
+
+      <p *ngIf="product.color"><strong>Color:</strong> {{ product.color }}</p>
+      <p *ngIf="product.size"><strong>Size:</strong> {{ product.size }}</p>
+      <p *ngIf="product.pricePerDay"><strong>Price Per Day:</strong> ₹{{ product.pricePerDay }}</p>
+      <p *ngIf="product.priceForSale"><strong>Sale Price:</strong> ₹{{ product.priceForSale }}</p>
+
+      <button [disabled]="!product.available">
+        {{ product.available ? 'Rent / Buy' : 'Unavailable' }}
+      </button>
+
+      <div class="all-images" *ngIf="product.images.length > 1">
+        <img *ngFor="let img of product.images.slice(1)" [src]="img" class="small-img" />
+      </div>
     </div>
   </div>
 </div>

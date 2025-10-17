@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CategoriesService, CategoryDetailsResponse } from '../../../../core/services/categories-service';
+import { SubCategoryResponse } from '../../../../core/services/subcategories-service';
 
 @Component({
   selector: 'app-category-details-page',
@@ -11,20 +12,18 @@ import { CategoriesService, CategoryDetailsResponse } from '../../../../core/ser
   styleUrls: ['./category-details-page.component.scss']
 })
 export class CategoryDetailsPageComponent implements OnInit {
-
   categoryDetails?: CategoryDetailsResponse;
-  selectedSubCategoryId?: number;
-  subcategoryProducts: any[] = [];
+  selectedSubCategory?: SubCategoryResponse;
   loading = false;
 
   constructor(
     private route: ActivatedRoute,
-    private categoryService: CategoriesService
+    private categoryService: CategoriesService,
+    private router: Router
   ) { }
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id')!;
-    console.log('Fetching category details for ID:', id);
     this.fetchCategoryDetails(id);
   }
 
@@ -33,45 +32,37 @@ export class CategoryDetailsPageComponent implements OnInit {
 
     this.categoryService.getCategoryDetails(id).subscribe({
       next: (details: any) => {
-        console.log('Raw category details from backend:', details);
-
-        // Category image
+        // Fix category image
         details.imagePath = details.imagePath
-          ? this.categoryService.getFullImageUrl(details.imagePath)
+          ? this.categoryService.getFullImageUrl(details.imagePath.replace(/\\/g, '/'))
           : '/assets/default-category.png';
-        console.log('Category image path:', details.imagePath);
 
-        // Subcategories
-        details.subCategories = (details.subcategories || []).map((sub: any) => {
-          const subImage = sub.imagePath
-            ? this.categoryService.getFullImageUrl(sub.imagePath)
-            : '/assets/default-category.png';
-
-          const products = (sub.products || []).map((prod: any) => {
-            const prodImage = prod.images?.[0]?.imageUrl
-              ? this.categoryService.getFullImageUrl(prod.images[0].imageUrl)
-              : '/assets/default-product.png';
-            return { ...prod, imagePath: prodImage };
-          });
-
-          return { ...sub, imagePath: subImage, products };
-        });
+        // Fix subcategory images & products
+        details.subCategories = (details.subcategories || []).map((sub: any) => ({
+          ...sub,
+          imagePath: sub.imagePath
+            ? this.categoryService.getFullImageUrl(sub.imagePath.replace(/\\/g, '/'))
+            : '/assets/default-category.png',
+          products: (sub.products || []).map((p: any) => ({
+            ...p,
+            images: (p.images || []).map((img: any) =>
+              this.categoryService.getFullImageUrl(img.imageUrl.replace(/\\/g, '/'))
+            ) || ['/assets/default-product.png']
+          }))
+        }));
 
         this.categoryDetails = details;
-        console.log('Final mapped category details:', this.categoryDetails);
-
         this.loading = false;
       },
-      error: (err) => {
-        console.error('Error fetching category details:', err);
-        this.loading = false;
-      }
+      error: () => (this.loading = false)
     });
   }
 
-  selectSubCategory(sub: any) {
-    this.selectedSubCategoryId = sub.id;
-    this.subcategoryProducts = sub.products || [];
-    console.log(`Selected subcategory: ${sub.name}, products:`, this.subcategoryProducts);
+  selectSubCategory(sub: SubCategoryResponse) {
+    this.selectedSubCategory = sub;
+  }
+
+  viewProductDetails(product: any) {
+    this.router.navigate(['/product', product.id], { state: { product } });
   }
 }

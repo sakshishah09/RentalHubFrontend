@@ -8,7 +8,8 @@
       <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
         <div class="form-group">
           <input type="text" placeholder="Name" formControlName="name" />
-          <div *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid" class="error">Name is required</div>
+          <div *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid" class="error">Name is
+            required</div>
         </div>
 
         <div class="form-group">

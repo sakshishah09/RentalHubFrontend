@@ -2,10 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import {
-  CategoriesService,
-  CategoryResponse
-} from '../../../../core/services/categories-service';
+import { CategoriesService, CategoryResponse } from '../../../../core/services/categories-service';
 
 @Component({
   selector: 'app-categories',
@@ -20,7 +17,7 @@ export class CategoriesComponent implements OnInit {
   showAll = false;
   loading = false;
 
-  constructor(private categoryService: CategoriesService, private router: Router) {}
+  constructor(private categoryService: CategoriesService, private router: Router) { }
 
   ngOnInit() {
     this.fetchCategories();

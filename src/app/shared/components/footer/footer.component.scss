@@ -93,19 +93,19 @@
     }
   }
 
- .footer-bottom {
-  background-color: rgb(19, 15, 61);
-  padding: 1rem 0;
-  
-  display: flex;
-  justify-content: center; // centers horizontally
-  align-items: center;     // centers vertically if needed
-  text-align: center;      // fallback for older browsers
+  .footer-bottom {
+    background-color: rgb(19, 15, 61);
+    padding: 1rem 0;
 
-  .copyright {
-    color: #fff;
-    font-weight: bold;
-    margin: 0;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    text-align: center; 
+
+    .copyright {
+      color: #fff;
+      font-weight: bold;
+      margin: 0;
+    }
   }
-}
 }

@@ -1,13 +1,13 @@
 <section class="product-details">
   <div class="container">
     <div class="details-card">
-      <img [src]="product.img" [alt]="product.name" />
+      <img [src]="product.images?.length ? product.images[0] : '/assets/default-product.png'" [alt]="product.name" />
       <div class="details-info">
         <h2>{{ product.name }}</h2>
-        <p>{{ product.desc }}</p>
+        <p>{{ product.description || 'No description available' }}</p>
         <div class="price">
-          <span>Rent: {{ product.priceRent }}</span>
-          <span>Buy: {{ product.priceBuy }}</span>
+          <span *ngIf="product.pricePerDay">Rent: ₹{{ product.pricePerDay }}</span>
+          <span *ngIf="product.priceForSale">Buy: ₹{{ product.priceForSale }}</span>
         </div>
         <button class="btn-book" (click)="bookNow()">Book Now</button>
       </div>

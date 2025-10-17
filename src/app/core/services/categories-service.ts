@@ -7,6 +7,8 @@ export interface CategoryResponse {
   id: number;
   name: string;
   imagePath: string;
+  subCategories?: CategoryResponse[];
+  products?: any[];
 }
 
 export interface CategoryDetailsResponse {
@@ -27,7 +29,6 @@ export interface RestResponse<T> {
   providedIn: 'root'
 })
 export class CategoriesService {
-
   private baseUrl: string;
 
   constructor(private http: HttpClient, private urlService: UrlService) {
@@ -49,4 +50,4 @@ export class CategoriesService {
     if (!path) return '/assets/default-category.png';
     return this.urlService.getImageUrl(path);
   }
-} 
+}

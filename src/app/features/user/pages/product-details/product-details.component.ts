@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 interface Product {
   id: number;
   name: string;
-  img: string;
-  desc: string;
-  priceRent: string;
-  priceBuy: string;
+  description?: string;
+  images?: string[];
+  pricePerDay?: number;
+  priceForSale?: number;
 }
 
 @Component({
@@ -18,7 +18,7 @@ interface Product {
 export class ProductDetailsComponent implements OnInit {
   product!: Product;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     const navigation = this.router.getCurrentNavigation();
@@ -26,8 +26,13 @@ export class ProductDetailsComponent implements OnInit {
     if (state?.product) {
       this.product = state.product;
     } else {
-      // fallback if accessed directly
-      this.router.navigate(['/products']);
+      const id = this.route.snapshot.paramMap.get('id');
+      if (id) {
+        // Fetch product by ID from backend if needed
+        console.log('Fetch product by ID:', id);
+      } else {
+        this.router.navigate(['/categories']);
+      }
     }
   }
 

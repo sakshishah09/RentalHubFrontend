@@ -32,7 +32,7 @@ export class SubCategoryService {
     this.baseUrl = `${this.urlService.getBaseUrl()}/subcategories`;
   }
 
-  // ✅ Get subcategories by category ID
+  // Get subcategories by category ID
   getSubCategoriesByCategory(categoryId: number): Observable<SubCategoryResponse[]> {
     return this.http.get<RestResponse<SubCategoryResponse[]>>(`${this.baseUrl}/category/${categoryId}`)
       .pipe(
@@ -43,7 +43,7 @@ export class SubCategoryService {
       );
   }
 
-  // ✅ Get all subcategories paginated
+  // Get all subcategories paginated
   getAllSubCategories(page: number, size: number): Observable<{ data: SubCategoryResponse[], totalRecords: number }> {
     const params = new HttpParams().set('page', page).set('size', size);
     return this.http.get<RestResponse<SubCategoryResponse[]>>(`${this.baseUrl}/all`, { params })
@@ -56,7 +56,7 @@ export class SubCategoryService {
       })));
   }
 
-  // ✅ Create a new subcategory
+  // Create a new subcategory
   createSubCategory(name: string, categoryId: number, image?: File): Observable<SubCategoryResponse> {
     const formData = new FormData();
     formData.append('name', name);
@@ -70,7 +70,7 @@ export class SubCategoryService {
       }));
   }
 
-  // ✅ Update subcategory
+  // Update subcategory
   updateSubCategory(id: number, name?: string, categoryId?: number, image?: File): Observable<SubCategoryResponse> {
     const formData = new FormData();
     formData.append('id', id.toString());
@@ -85,7 +85,7 @@ export class SubCategoryService {
       }));
   }
 
-  // ✅ Delete subcategory
+  // Delete subcategory
   deleteSubCategory(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }

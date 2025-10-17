@@ -4,18 +4,24 @@
   <!-- Subcategories -->
   <div class="subcategories-grid" *ngIf="categoryDetails?.subCategories?.length">
     <div class="subcategory-card" *ngFor="let sub of categoryDetails.subCategories"
-      [class.active]="selectedSubCategoryId === sub.id" (click)="selectSubCategory(sub)">
+      [class.active]="selectedSubCategory?.id === sub.id" (click)="selectSubCategory(sub)">
       <img [src]="sub.imagePath" [alt]="sub.name" (error)="sub.imagePath='/assets/default-category.png'" />
       <p>{{ sub.name }}</p>
     </div>
   </div>
 
-  <!-- Products -->
-  <div class="products-grid" *ngIf="subcategoryProducts?.length > 0">
-    <div class="product-card" *ngFor="let prod of subcategoryProducts">
-      <img [src]="prod.imagePath" [alt]="prod.name" (error)="prod.imagePath='/assets/default-product.png'" />
-      <p>{{ prod.name }}</p>
+  <!-- Products of selected subcategory -->
+  <div *ngIf="selectedSubCategory?.products?.length > 0" class="products-grid">
+    <div class="product-card" *ngFor="let product of selectedSubCategory.products"
+      (click)="viewProductDetails(product)">
+      <img [src]="product.images[0]" [alt]="product.name" />
+      <p>{{ product.name }}</p>
     </div>
+  </div>
+
+  <!-- No products -->
+  <div *ngIf="selectedSubCategory && (!selectedSubCategory.products || selectedSubCategory.products.length === 0)">
+    No products available in this subcategory.
   </div>
 </div>
 

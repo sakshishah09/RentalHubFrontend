@@ -1,10 +1,11 @@
 .about-section {
   background: #fff;
-  padding: 100px 20px 80px; // added extra top padding to clear navbar
+  padding: 100px 20px 80px; 
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;;
+  margin-top: 50px;
+  ;
 
   .container {
     max-width: 1200px;
@@ -21,8 +22,7 @@
 
   .about-text {
     flex: 1 1 500px;
-    text-align: left; // ensure left alignment on desktop
-
+    text-align: left; 
     h1 {
       font-size: 2.5rem;
       font-weight: 700;
@@ -77,7 +77,7 @@
 /* Responsive Design */
 @media (max-width: 992px) {
   .about-section {
-    padding-top: 120px; // extra spacing for smaller screens
+    padding-top: 120px; 
   }
 }
 
@@ -87,7 +87,8 @@
     text-align: center;
 
     .about-text {
-      text-align: center; // center text on mobile
+      text-align: center; 
+
       h1 {
         font-size: 2rem;
       }

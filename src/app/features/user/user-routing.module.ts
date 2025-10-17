@@ -6,14 +6,24 @@ import { ProductDetailsComponent } from './pages/product-details/product-details
 import { ProductComponent } from './pages/product/product.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { CategoryDetailsPageComponent } from './pages/category-details/category-details-page.component';
+import { BookingComponent } from './pages/booking/booking.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'product', component: ProductComponent },
+
+  // Product list by subcategory
+  { path: 'product/subcategory/:id', component: ProductComponent },
+
+  // Product details
   { path: 'product/:id', component: ProductDetailsComponent },
+
   { path: 'categories', component: CategoriesComponent },
-  { path: 'categories/:id', component: CategoryDetailsPageComponent }
+  { path: 'categories/:id', component: CategoryDetailsPageComponent },
+  { path: 'booking', component: BookingComponent },
+
+  // fallback
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({
